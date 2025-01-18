@@ -1210,7 +1210,7 @@ def _format_text(text: str) -> str:
     return text
 
 
-def create_subtitle(sub_maker: submaker.SubMaker, text: str, subtitle_file: str):
+def create_subtitle(sub_maker: submaker.SubMaker, text: str, subtitle_file: str, is_short: bool):
     """
     优化字幕文件
     1. 将字幕文件按照标点符号分割成多行
@@ -1234,7 +1234,10 @@ def create_subtitle(sub_maker: submaker.SubMaker, text: str, subtitle_file: str)
     sub_items = []
     sub_index = 0
 
-    script_lines = utils.split_string_by_punctuations(text)
+    if is_short:
+        script_lines = utils.split_string_by_punctuations_for_short(text)
+    else:
+        script_lines = utils.split_string_by_punctuations(text)
 
     def match_line(_sub_line: str, _sub_index: int):
         if len(script_lines) <= _sub_index:
