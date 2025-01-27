@@ -31,15 +31,12 @@ services:
     volumes: *common-volumes
     restart: always
   ollama:
-    image: ollama/ollama:rocm
+    image: ollama/ollama:latest
     container_name: "ollama"
     ports:
       - "11434:11434"
     volumes:
       - ollama:/root/.ollama
-    devices:
-      - /dev/kfd
-      - /dev/dri
     restart: always
 
 volumes:
