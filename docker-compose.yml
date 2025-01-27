@@ -37,6 +37,9 @@ services:
       - "11434:11434"
     volumes:
       - ollama:/root/.ollama
+    environment:
+      - OLLAMA_MODEL=deepseek-r1:32b
+    command: sh -c "ollama pull deepseek-r1:32b && ollama serve"
     restart: always
 
 volumes:
