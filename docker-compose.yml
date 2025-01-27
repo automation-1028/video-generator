@@ -36,7 +36,6 @@ services:
       dockerfile: ./Dockerfile.ollama
     image: ollama
     container_name: ollama
-    env_file: env
     entrypoint: /tmp/run_ollama.sh
     ports:
       - 11434:11434
