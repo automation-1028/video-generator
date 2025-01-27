@@ -31,15 +31,19 @@ services:
     volumes: *common-volumes
     restart: always
   ollama:
-    image: ollama/ollama:latest
-    container_name: "ollama"
+    build:
+      context: .
+      dockerfile: ./Dockerfile.ollama
+    image: ollama
+    container_name: ollama
+    env_file: env
+    entrypoint: /tmp/run_ollama.sh
     ports:
-      - "11434:11434"
+      - 11434:11434
     volumes:
       - ollama:/root/.ollama
-    environment:
-      - OLLAMA_MODEL=deepseek-r1:32b
-    command: ["ollama", "serve"]
+    pull_policy: always
+    tty: true
     restart: always
 
 volumes:
