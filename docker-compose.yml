@@ -30,20 +30,8 @@ services:
     command: ["python3", "main.py"]
     volumes: *common-volumes
     restart: always
-  ollama:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.ollama
-    image: ollama
-    container_name: ollama
-    entrypoint: /tmp/run_ollama.sh
-    ports:
-      - 11434:11434
-    volumes:
-      - ollama:/root/.ollama
-    pull_policy: always
-    tty: true
-    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   ollama: {}
