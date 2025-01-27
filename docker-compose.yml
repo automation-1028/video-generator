@@ -30,3 +30,14 @@ services:
     command: ["python3", "main.py"]
     volumes: *common-volumes
     restart: always
+  ollama:
+    image: ollama/ollama:latest
+    container_name: "ollama"
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: always
+
+volumes:
+  ollama: {}

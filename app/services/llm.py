@@ -253,11 +253,20 @@ def _generate_response(prompt: str) -> str:
                 raise Exception(
                     f"[{llm_provider}] returned an empty response, please check your network connection and try again."
                 )
+            
+        # CUSTOM: Remove think tags content
+        if "deepseek" in model_name:
+            content = remove_think_tag_content(content)
 
         return content.replace("\n", "")
     except Exception as e:
         return f"Error: {str(e)}"
 
+def remove_think_tag_content(text):
+    # Remove content between think tags
+    cleaned = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+    # Remove extra whitespace
+    return cleaned.strip()
 
 def generate_script(
     video_subject: str, language: str = "", paragraph_number: int = 1
