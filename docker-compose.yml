@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "webui"
+    image: "video-generator-webui"
     ports:
       - "8501:8501"
     command:
@@ -24,7 +24,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "api"
+    image: "video-generator-api"
     ports:
       - "8080:8080"
     command: ["python3", "main.py"]
