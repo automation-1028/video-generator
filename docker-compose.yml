@@ -32,6 +32,11 @@ services:
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 1
+        order: start-first
 
   # ollama:
   #   image: ollama/ollama:rocm
