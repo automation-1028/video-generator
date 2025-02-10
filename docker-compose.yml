@@ -33,7 +33,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     deploy:
-      replicas: 1
+      replicas: 4
       update_config:
         parallelism: 1
         order: start-first
