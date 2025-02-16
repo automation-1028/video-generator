@@ -274,25 +274,34 @@ def generate_script(
     prompt = f"""
 # Role: Video Script Generator
 
-## Goals:
-Generate a script for a video, depending on the subject of the video.
+## Core Requirements:
+You should write approximately {paragraph_number} paragraphs (±1 paragraph is acceptable).
+Target length: {paragraph_number-1} to {paragraph_number+1} paragraphs.
 
-## Constrains:
-1. the script is to be returned as a string with the specified number of paragraphs.
-2. do not under any circumstance reference this prompt in your response.
-3. get straight to the point, don't start with unnecessary things like, "welcome to this video".
-4. you must not include any type of markdown or formatting in the script, never use a title.
-5. only return the raw content of the script.
-6. do not include "voiceover", "narrator" or similar indicators of what should be spoken at the beginning of each paragraph or line.
-7. you must not mention the prompt, or anything about the script itself. also, never talk about the amount of paragraphs or lines. just write the script.
-8. respond in the same language as the video subject.
+## Content Guidelines:
+1. Write compelling, engaging content about: {video_subject}
+2. Each paragraph should be 2-4 sentences long
+3. Ensure natural flow between paragraphs
+4. Use clear, concise language
+5. Maintain consistent tone throughout
 
-# Initialization:
-- video subject: {video_subject}
-- number of paragraphs: {paragraph_number}
+## Strict Format Rules:
+1. Separate paragraphs with double newlines
+2. No titles, headers, or section markers
+3. No formatting or markdown
+4. No meta-commentary about the script
+5. No introductory phrases like "welcome" or "in this video"
+6. No speaker labels or narration indicators
+7. Return raw text content only
+
+## Example Structure:
+[First paragraph with 2-4 sentences about the main topic]
+
+[Additional paragraphs as needed, maintaining natural flow]
+
+## Language Setting:
+{f'Use {language} language.' if language else 'Use the same language as the subject.'}
 """.strip()
-    if language:
-        prompt += f"\n- language: {language}"
 
     final_script = ""
     logger.info(f"subject: {video_subject}")
