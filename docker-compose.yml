@@ -39,7 +39,7 @@ services:
         order: start-first
 
   ollama:
-    image: ollama/ollama:lastest
+    image: ollama/ollama:latest
     container_name: "ollama"
     ports:
       - "11434:11434"
