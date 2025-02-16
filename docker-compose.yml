@@ -53,6 +53,7 @@ services:
       - ollama:/root/.ollama
     environment:
       - OLLAMA_KEEP_ALIVE=60
+      - OLLAMA_NUM_CTX=8096
     restart: always
     deploy:
       resources:
