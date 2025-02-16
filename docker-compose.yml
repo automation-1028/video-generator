@@ -37,6 +37,12 @@ services:
       update_config:
         parallelism: 1
         order: start-first
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   ollama:
     image: ollama/ollama:latest
