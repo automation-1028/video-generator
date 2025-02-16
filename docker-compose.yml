@@ -46,6 +46,13 @@ services:
     volumes:
       - ollama:/root/.ollama
     restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 volumes:
   ollama: {}
