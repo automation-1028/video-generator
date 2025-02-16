@@ -38,16 +38,14 @@ services:
         parallelism: 1
         order: start-first
 
-  # ollama:
-  #   image: ollama/ollama:rocm
-  #   container_name: "ollama"
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ollama:/root/.ollama
-  #   restart: always
-  #   environment:
-  #     - "HSA_OVERRIDE_GFX_VERSION=9.0.6"
+  ollama:
+    image: ollama/ollama:lastest
+    container_name: "ollama"
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: always
 
 volumes:
   ollama: {}
