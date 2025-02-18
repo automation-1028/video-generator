@@ -17,7 +17,8 @@ from app.utils import utils
 from TTS.api import TTS
 
 # Get device
-device = "cuda" if torch.cuda.is_available() else "cpu"
+# device = "cuda" if torch.cuda.is_available() else "cpu"
+device = "cpu"
 
 def get_all_azure_voices(filter_locals=None) -> list[str]:
     if filter_locals is None:
