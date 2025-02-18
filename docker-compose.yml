@@ -1,5 +1,6 @@
 x-common-volumes: &common-volumes
   - ./:/MoneyPrinterTurbo
+  - ./tts:/root/.local/share/tts
 
 services:
   webui:
