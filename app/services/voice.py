@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 from typing import Union
 from xml.sax.saxutils import unescape
+import torch
 
 import edge_tts
 from edge_tts import SubMaker, submaker
@@ -13,7 +14,10 @@ from moviepy.video.tools import subtitles
 
 from app.config import config
 from app.utils import utils
+from TTS.api import TTS
 
+# Get device
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def get_all_azure_voices(filter_locals=None) -> list[str]:
     if filter_locals is None:
@@ -1054,9 +1058,39 @@ def is_azure_v2_voice(voice_name: str):
     return ""
 
 
+def coqui_tts(text: str, model_name: str, voice_file: str) -> Union[SubMaker, None]:
+    """Generate audio using Coqui TTS"""
+    try:
+        tts = TTS(model_name=model_name).to(device)
+
+        tts.tts_to_file(text=text, file_path=voice_file, speaker="Viktor Menelaos", language="en")
+        
+        # Create a simple subtitle maker with basic timing
+        sub_maker = SubMaker()
+        # Approximate timing based on words (rough estimate)
+        words = text.split()
+        total_duration = len(words) * 0.3  # Assume ~300ms per word
+        sub_maker.subs = [text]
+        sub_maker.offset = [(0, int(total_duration * 10000000))]  # Convert to 100-nanosecond units
+        
+        logger.info(f"completed, output file: {voice_file}")
+        return sub_maker
+    except Exception as e:
+        logger.error(f"Coqui TTS failed: {str(e)}")
+        return None
+
+
 def tts(
     text: str, voice_name: str, voice_rate: float, voice_file: str
 ) -> Union[SubMaker, None]:
+    """
+    Generate audio using configured TTS provider
+    """
+    # Check if it's a Coqui model name
+    if voice_name.startswith("tts_models/"):
+        return coqui_tts(text, voice_name, voice_file)
+    
+    # Otherwise use Azure TTS
     if is_azure_v2_voice(voice_name):
         return azure_tts_v2(text, voice_name, voice_file)
     return azure_tts_v1(text, voice_name, voice_rate, voice_file)

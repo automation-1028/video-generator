@@ -73,18 +73,27 @@ def save_script_data(task_id, video_script, video_terms, params):
 def generate_audio(task_id, params, video_script):
     logger.info("\n\n## generating audio")
     audio_file = path.join(utils.task_dir(task_id), "audio.mp3")
+    
+    # voice_name = "tts_models/multilingual/multi-dataset/xtts_v2"
+    voice_name = params.voice_name
+    # If using Coqui TTS, don't parse the voice name
+    if not voice_name.startswith("tts_models/"):
+        voice_name = voice.parse_voice_name(voice_name)
+        
     sub_maker = voice.tts(
         text=video_script,
-        voice_name=voice.parse_voice_name(params.voice_name),
+        voice_name=voice_name,
         voice_rate=params.voice_rate,
         voice_file=audio_file,
     )
+    
     if sub_maker is None:
         sm.state.update_task(task_id, state=const.TASK_STATE_FAILED)
         logger.error(
             """failed to generate audio:
 1. check if the language of the voice matches the language of the video script.
 2. check if the network is available. If you are in China, it is recommended to use a VPN and enable the global traffic mode.
+3. if using Coqui TTS, ensure the model name is correct and the model is available.
         """.strip()
         )
         return None, None, None
