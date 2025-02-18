@@ -21,6 +21,7 @@ services:
       ]
     volumes: *common-volumes
     restart: always
+  # tts --text "Text for TTS" --model_name tts_models/multilingual/multi-dataset/xtts_v2 --out_path output/path/speech.wav
   api:
     build:
       context: .
