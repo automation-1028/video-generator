@@ -1063,7 +1063,7 @@ def coqui_tts(text: str, model_name: str, voice_file: str) -> Union[SubMaker, No
     try:
         tts = TTS(model_name=model_name).to(device)
 
-        tts.tts_to_file(text=text, file_path=voice_file, speaker="Viktor Menelaos", language="en")
+        tts.tts_to_file(text=text, file_path=voice_file, speaker="p231")
         
         # Create a simple subtitle maker with basic timing
         sub_maker = SubMaker()
