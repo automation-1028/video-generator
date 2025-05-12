@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: "video-generator-webui"
+    container_name: "moneyprinterturbo-webui"
     ports:
       - "8501:8501"
     command:
@@ -27,6 +27,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: "video-generator-api"
+    container_name: "moneyprinterturbo-api"
     ports:
       - "8080:8080"
     command: ["python3", "main.py"]

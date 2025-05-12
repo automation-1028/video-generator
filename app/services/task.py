@@ -108,7 +108,7 @@ def generate_subtitle(task_id, params, video_script, sub_maker, audio_file):
 
     is_short = params.video_aspect == "9:16"
     subtitle_path = path.join(utils.task_dir(task_id), "subtitle.srt")
-    subtitle_provider = config.app.get("subtitle_provider", "").strip().lower()
+    subtitle_provider = config.app.get("subtitle_provider", "edge").strip().lower()
     logger.info(f"\n\n## generating subtitle, provider: {subtitle_provider}")
 
     subtitle_fallback = False

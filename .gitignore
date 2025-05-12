@@ -24,4 +24,5 @@ node_modules
 /models/
 ./models/*
 
+venv/
 .venv
